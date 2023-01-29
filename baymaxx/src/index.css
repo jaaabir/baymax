@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.container {
+  margin-top: 5%;
+  /* border: 2px solid black; */
+  height: 100%;
+}
+
+.message.user {
+  text-align: right !important;
+}
+
+.message {
+  font-size: 18px;
+  color: rgb(35, 35, 35);
+}
+
+#card {
+  height: 80%;
+}
+
+.card.card-body {
+  overflow-y: scroll !important;
+}
+
+#root {
+  /* border: 2px solid blue; */
+  height: 550px;
+}

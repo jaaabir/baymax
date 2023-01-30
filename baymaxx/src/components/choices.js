@@ -3,6 +3,9 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function Choices({ options, handleUserChoice }) {
   const choices = options ? options : ["yes", "no"];
+  function handleChange(e){
+    handleUserChoice(e.target.value)
+  }
   const btns = choices.map((op) => {
     return (
       <div key={uuidv4()}>
@@ -13,7 +16,7 @@ export default function Choices({ options, handleUserChoice }) {
           id={op}
           value={op}
           autoComplete="off"
-          onChange={(e) => handleUserChoice(e.target.value)}
+          onChange={handleChange}
         />
         <label className="btn btn-outline-primary" htmlFor={op}>
           {op}

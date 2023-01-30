@@ -124,7 +124,7 @@ function App() {
   }
 
   useEffect(() => {
-    console.log(history);
+    // console.log(history);
     const lastMsg = history[history.length - 1];
     const yn = lastMsg.type.yesNo;
     if (yn) {

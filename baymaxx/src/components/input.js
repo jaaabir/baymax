@@ -52,6 +52,7 @@ function Input({
   }
 
   function sendToBackend() {
+    console.log(userInp);
     handleHistory(userInp);
     if (counter <= 2) {
       handleCounter();
@@ -89,16 +90,22 @@ function Input({
   const [userChoice, setUserChoice] = useState("");
 
   function handleUserChoice(value) {
+    console.log('from handleUserChoice : ' + value + ' | isChoice : ' + isChoice)
     setUserChoice(value);
     userInpState(value);
   }
 
   useEffect(() => {
+    console.log('from useEffect : ' + userChoice + ' | userInpState : ' + userInpState)
     if (isChoice) {
       sendToBackend();
       handleIsChoice(false);
     }
-  }, [userChoice]);
+  }, [userChoice, userInp]);
+
+  // useEffect(() =>{
+  //   console.log('from userInp effect : ' + userInp)
+  // }, [userInp])
 
   const showInpStyle = {
     display: isChoice ? "none" : "inline",

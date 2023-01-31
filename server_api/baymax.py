@@ -64,7 +64,7 @@ def get_all_diseases(symptoms : list, n_diseases = 3, recursive = False):
     ### how it works :
     # this func will get one disease based on the specified symptom and then iterate more symptoms if there 
     # are any more in the list. if it dont find any symptom in middle of the traversal it will erase that symptom 
-    # and move on to the next symptom for attaining the global minima. 
+    # and move on to the next symptom for attaining the finalized disease(s). 
     ### cons / improvement :
     # must also consider the removed symptoms from the sub graph, because the patient is describing what they are experiencing. 
     if symptoms == []:
@@ -131,7 +131,7 @@ def predict_diseases(df, symptoms, top = 3):
         score = 1
         for s in rdf.s:
             for sym in symptoms:
-                if s == sym.text:
+                if s == sym:
                     score -= 0.01
         diseases.append((d, score))
                 
@@ -210,18 +210,17 @@ def main():
     for d, score in top_diseases:
         print()
         print(f'{d.capitalize()} | {1 - score}')
-      
+   
+cfilename = 'config.ini' 
+config = configparser.ConfigParser()
+config.read(cfilename)
+CONFIG = config['graph']
+uri, username, password = CONFIG['uri'], CONFIG['username'], CONFIG['password']
+if not (uri and username and password):
+    print('Store your Neo4j URI, username and password in config.ini file')
+    exit()     
         
 if __name__ == "__main__":
-    
-    cfilename = 'config.ini' 
-    config = configparser.ConfigParser()
-    config.read(cfilename)
-    CONFIG = config['graph']
-    uri, username, password = CONFIG['uri'], CONFIG['username'], CONFIG['password']
-    if not (uri and username and password):
-        print('Store your Neo4j URI, username and password in config.ini file')
-        exit()  
         
     VERBOSE = True
     xml_filename = 'std-startup.xml'

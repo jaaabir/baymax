@@ -15,7 +15,7 @@ class MonDb:
     
     def user_in_db(self, id, return_type = 'obj'):
         history = self.db[self.col].find_one({
-            'id' : ObjectId(id)
+            'userId' : id
             })
         
         if return_type == 'bool':
@@ -23,8 +23,14 @@ class MonDb:
         
         return history
     
-    def upload_history(self, history):
-        self.db[self.col].insert_one(history)
+    def upload_history(self, userId, history, diseases, symptoms):
+        data = {
+            'userId' : userId,
+            'history' : history,
+            'diseases' : diseases,
+            'detected_symptoms' : symptoms
+        }
+        self.db[self.col].insert_one(data)
         
 class LocDb:
     def __init__(self, filename = 'local_history.json'):
@@ -32,10 +38,9 @@ class LocDb:
         self.create_db()
         
     def create_db(self):
-        if self.filename not in os.listdir():
-            data = {'userId' : ['symptoms']}
-            with open(self.filename, 'w') as file:
-                json.dump(data, file)
+        data = {'userId' : ['symptoms']}
+        with open(self.filename, 'w') as file:
+            json.dump(data, file, indent = 6)
                 
     def load_db(self):
         data = None
@@ -60,6 +65,15 @@ class LocDb:
         jdb = self.load_db()
         jdb = {k : v for k,v in jdb.items() if k != userId}  
         self.save_db(jdb)
+        
+    def get_user_symp(self, userId):
+        try:
+            jdb = self.load_db()
+            symps = jdb[userId]
+        except KeyError as err:
+            pass
+        return symps 
+        
         
         
         

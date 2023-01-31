@@ -120,6 +120,10 @@ function App() {
     const response = await fetch(url, data);
     if (!response.ok) {
       console.log("didnt update the msg");
+    } else {
+      const diseases = await response.json();
+      console.log(diseases);
+      handleHistory(diseases.body);
     }
   }
 
@@ -133,6 +137,8 @@ function App() {
 
     const endConvo = lastMsg.endConvo;
     if (endConvo) {
+      console.log("ok now the convo ended ...");
+      saveHistory();
     }
   }, [history]);
 

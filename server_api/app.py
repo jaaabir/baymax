@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from baymax import read_json, start_greeting, get_basic_details, check_typos, get_symptoms, get_all_diseases, predict_diseases
+from baymax import read_json, get_symptoms, get_all_diseases, predict_diseases
 from spellchecker import SpellChecker
 from butils import clean_text
 from datetime import datetime
@@ -74,15 +74,37 @@ def detect_symptoms():
     }     
     return jsonify(data)
 
+def prettify_diseases(diseases):
+    msg = [i[0] for i in diseases]
+    msg = f"you are more likely to have {', '.join(msg)}"
+    return msg
 
 @app.post('/api/savechat')
 def update_history():
     userId  = request.get_json()['userId']
     history = request.get_json()['history']
-    print(history)
+    symptoms = [i for i in JDB.get_user_symp(userId) if i != "experience"]
+    diseases = get_all_diseases(symptoms)
+    top_diseases = predict_diseases(diseases, symptoms, top = 3)
+    print(top_diseases)
+    MDB.upload_history(userId, history, top_diseases, symptoms)
+    JDB.del_user(userId)
     return jsonify({
-        'success' : True,
-        'code'    : 200 
+      "userId": userId,
+      "body": {
+        "message": prettify_diseases(top_diseases),
+        "isUser": False,
+        "type": {
+          "yesNo": False,
+          "selected": None,
+        },
+        "msgTime": Date(),
+        "endConvo": False,
+      },
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
     })
 
 if __name__ == '__main__':
@@ -96,9 +118,13 @@ if __name__ == '__main__':
     GRAPH = config['graph']
     
     ### initializing dbs
-    uri = DB['uri']
+    passwd = DB['password']
+    uri = DB['uri'].format(passwd)
+    db_name = DB['dbname']
+    collection = DB['collection']
     filename = DB['filename']
     JDB = LocDb(filename)
+    MDB = MonDb(uri, db_name, collection)
     
     xml_filename = 'std-startup.xml'
     pattern = "load aiml b"

@@ -26,7 +26,7 @@ def main():
 
     col1, col2, col3 = st.columns(3)
     refresh()
-    btn = st.button('refresh')
+    btn = st.button('Refresh')
     if btn:
         refresh()
     common_symptoms()
@@ -56,6 +56,7 @@ def common_symptoms():
     counts = Counter(st.session_state['detected_symptoms']).most_common()
     df_counts = pd.DataFrame(counts, columns=['symp', 'count'])
     print(df_counts)
+    st.title("Common Symptoms")
     fig, x = plt.subplots()
     x.pie(df_counts['count'], labels=df_counts['symp'], autopct='%1.1f%%')
     st.pyplot(fig)
@@ -65,6 +66,7 @@ def common_pred_diseases():
     counts = Counter(st.session_state['diseases']).most_common()
     df_counts = pd.DataFrame(counts, columns=['dis', 'count'])
     print(df_counts)
+    st.title("Common Predicted Diseases")
     fig, x = plt.subplots()
     x.pie(df_counts['count'], labels=df_counts['dis'], autopct='%1.1f%%')
     st.pyplot(fig)

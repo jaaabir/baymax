@@ -9,8 +9,6 @@ import os
 import sys
 from collections import Counter
 
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import ConfusionMatrixDisplay
 #from streamlit import cli as stcli
 
 
@@ -28,7 +26,9 @@ def main():
 
     col1, col2, col3 = st.columns(3)
     refresh()
-
+    btn = st.button('refresh')
+    if btn:
+        refresh()
     common_symptoms()
     common_pred_diseases()
 

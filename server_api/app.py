@@ -143,7 +143,7 @@ if __name__ == '__main__':
         corpus = read_json(os.path.join('datasets', 'corpus.json'))['symptoms']
         spelling = SpellChecker(update_word_probs = True, corpus = corpus, verbose = DEVELOPER_MODE)
         spelling.vocabBuilder.add_to_dictionary(words =  [',', '.'])  
-        app.run(debug = DEVELOPER_MODE, port = 6969)
+        app.run(debug = DEVELOPER_MODE, host='192.168.0.6', port = 6969)
     except py2neo.errors.ServiceUnavailable as err:
         print('Please start the Neo4j graph DB first ...')
         

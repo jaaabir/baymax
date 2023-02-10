@@ -1,9 +1,10 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Display({ alignment, kolor, msg }) {
   return (
     <>
-      <div className={"message " + alignment}>
+      <div className={"row " + alignment} key={uuidv4()}>
         <span className={"badge " + kolor}>
           <p className="card-text">{msg}</p>
         </span>

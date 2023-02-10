@@ -117,14 +117,21 @@ if __name__ == '__main__':
     DB = config['DB']
     GRAPH = config['graph']
     
-    ### initializing dbs
-    passwd = DB['password']
-    uri = DB['uri'].format(passwd)
-    db_name = DB['dbname']
-    collection = DB['collection']
+    ### initializing dbs  
     filename = DB['filename']
     JDB = LocDb(filename)
-    MDB = MonDb(uri, db_name, collection)
+
+    passwd = DB['password']
+    uri = DB['uri'].format(passwd)
+    
+    db_name = DB['dbname']
+    collection = DB['collection']
+    try:
+      MDB = MonDb(uri, db_name, collection)
+    except:
+      uri = DB['uri2'].format(passwd)
+      MDB = MonDb(uri, db_name, collection)
+      
     
     xml_filename = 'std-startup.xml'
     pattern = "load aiml b"

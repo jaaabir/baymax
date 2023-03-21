@@ -101,8 +101,9 @@ function App() {
     setIsChoice(val);
   }
 
+  const [flaskURL, setflaskURL] = useState('http://192.168.0.6:6969/')
   async function saveHistory() {
-    const url = "http://localhost:6969/api/savechat";
+    const url = flaskURL + "api/savechat";
     const body = {
       userId: userId,
       history: history,
@@ -126,6 +127,8 @@ function App() {
       handleHistory(diseases.body);
     }
   }
+  
+  const [gotFeedback, setgotFeedback] = useState(false);
 
   useEffect(() => {
     // console.log(history);
@@ -157,6 +160,7 @@ function App() {
           handleHistory={handleHistory}
           handleIsChoice={handleIsChoice}
           isChoice={isChoice}
+          flaskURL={flaskURL}
         />
       </div>
     </>

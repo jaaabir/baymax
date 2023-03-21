@@ -11,6 +11,7 @@ function Input({
   handleHistory,
   handleIsChoice,
   isChoice,
+  flaskURL
 }) {
   const [userInp, userInpState] = useState("");
   const [failRes, setFailRes] = useState(false);
@@ -20,7 +21,7 @@ function Input({
   }
 
   async function postdata() {
-    const url = "http://localhost:6969/api/getsymps";
+    const url = flaskURL + "api/getsymps";
     const body = {
       userId: userId,
       message: userInp,

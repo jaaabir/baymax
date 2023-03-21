@@ -8,6 +8,7 @@ function Form({
   handleHistory,
   handleIsChoice,
   isChoice,
+  flaskURL
 }) {
   const [btnClicked, btnClickedState] = useState(false);
 
@@ -32,6 +33,7 @@ function Form({
             handleHistory={handleHistory}
             handleIsChoice={handleIsChoice}
             isChoice={isChoice}
+            flaskURL={flaskURL}
           />
           {isChoice ? (
             <></>

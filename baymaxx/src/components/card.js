@@ -5,13 +5,13 @@ import { v4 as uuidv4 } from "uuid";
 export default function Card({ history }) {
   const textHistory = history.map((element) => {
     return (
-      // <div className="row" key={uuidv4()}>
+      <div className="" key={uuidv4()}>
         <Display
           alignment={element.isUser ? "justify-content-end" : "justify-content-start"}
           kolor={element.isUser ? "bg-secondary" : "bg-primary"}
           msg={element.message}
         />
-      // </div>
+      </div>
     );
   });
 

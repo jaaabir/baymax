@@ -3,10 +3,11 @@ import Form from "./components/form";
 import Card from "./components/card";
 import { v4 as uuidv4 } from "uuid";
 
+
 function App() {
   const [history, setHistory] = useState([
     {
-      message: "Hi, my name is baymaxx",
+      message: "Hi, my name is Baymaxx",
       isUser: false,
       type: {
         yesNo: false,
@@ -127,7 +128,7 @@ function App() {
       handleHistory(diseases.body);
     }
   }
-  
+
   const [gotFeedback, setgotFeedback] = useState(false);
 
   useEffect(() => {

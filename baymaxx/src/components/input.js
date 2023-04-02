@@ -52,6 +52,7 @@ function Input({
   }
 
   function sendToBackend() {
+    if(userInp.length > 0){
     handleHistory(userInp);
     if (counter <= 2) {
       handleCounter();
@@ -59,7 +60,7 @@ function Input({
       console.log("posting the data");
       postdata();
     }
-    userInpState("");
+    userInpState("");}
     inpRef.current.focus();
   }
 

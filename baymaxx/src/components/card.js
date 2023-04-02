@@ -1,8 +1,29 @@
-import React,{useRef, useEffect} from "react";
+import React,{useRef, useEffect, useState} from "react";
 import Display from "./display";
 import { v4 as uuidv4 } from "uuid";
+import { useSpeechSynthesis } from 'react-speech-kit';
 
 export default function Card({ history }) {
+  const [spk, setspk] = useState(false)
+  const [fmsg, setfmsg] = useState(history[history.length-1].message) 
+  const [counter, setcounter] = useState(1)
+  const {speak} = useSpeechSynthesis();
+
+  useEffect(()=>{
+    if(!history[history.length-1].isUser){
+    setfmsg(history[history.length-1].message)
+    setspk(!history[history.length-1].isUser)
+    setcounter(1)
+    }
+  },[history])
+
+  useEffect(()=>{
+    if(spk && counter > 0){
+      speak({text:fmsg.replace(" (y/n)", "")})
+      setcounter(0)
+    }
+  })
+
   const textHistory = history.map((element) => {
     return (
       <div className="" key={uuidv4()}>

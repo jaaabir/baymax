@@ -35,6 +35,11 @@ class MonDb:
         }
         self.db[self.col].insert_one(data)
 
+    def update_feedback(self, userId, feedback):
+        query = {"userId": userId}
+        newvalues = {'$set': {'feedback': feedback}}
+        self.db[self.col].update_one(query, newvalues)
+
 
 class LocDb:
     def __init__(self, filename='local_history.json'):

@@ -107,6 +107,14 @@ def update_history():
       },
     })
 
+@app.post('/api/updatechat')
+def append_feedback():
+    userId  = request.get_json()['userId']
+    feedback = request.get_json()['feedback']
+    MDB.update_feedback(userId, feedback)
+    return jsonify({"code": 200,
+                    "success": True})
+    
 if __name__ == '__main__':
     DEVELOPER_MODE = True
     

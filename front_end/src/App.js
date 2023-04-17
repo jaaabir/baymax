@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Form from "./components/form";
 import Card from "./components/card";
 import { v4 as uuidv4 } from "uuid";
+import Feedback from "./components/feedback";
 
 
 function App() {
@@ -126,10 +127,11 @@ function App() {
       const diseases = await response.json();
       console.log(diseases);
       handleHistory(diseases.body);
+      setgetFeedback(true)
     }
   }
 
-  const [gotFeedback, setgotFeedback] = useState(false);
+  const [getFeedback, setgetFeedback] = useState(false);
 
   useEffect(() => {
     // console.log(history);
@@ -142,6 +144,7 @@ function App() {
     const endConvo = lastMsg.endConvo;
     if (endConvo) {
       console.log("ok now the convo ended ...");
+      setgetFeedback(false)
       saveHistory();
     }
   }, [history]);
@@ -150,8 +153,13 @@ function App() {
     console.log("user ID : " + userId);
   }, []);
 
+  function handleOnRequestClose(){
+    setgetFeedback(false)
+  }
+
   return (
     <>
+    {getFeedback ? <Feedback getFeedback={getFeedback} onRequestClose={handleOnRequestClose} handleHistory={handleHistory} diseases={history[history.length-1].message} flaskURL={flaskURL} userId={userId}></Feedback>:<></>}
       <div className="container">
         <Card history={history} />
         <Form
